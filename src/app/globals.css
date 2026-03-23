@@ -127,4 +127,14 @@
   html {
     @apply font-sans;
   }
+
+  :root {
+    --navy: #1e3a5f;
+    --blue: #2563eb;
+    --light: #f8fafc;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
 }
