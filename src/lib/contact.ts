@@ -1,6 +1,6 @@
 import { Resend } from 'resend'
 
-type ContactFormData = {
+export type ContactFormData = {
   nombre: string
   telefono: string
   correo: string
@@ -8,22 +8,34 @@ type ContactFormData = {
   mensaje: string
 }
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+}
+
 export async function sendEmail(data: ContactFormData): Promise<boolean> {
-  const resend = new Resend(process.env.RESEND_API_KEY)
-  const { error } = await resend.emails.send({
-    from: 'University Depas <noreply@universitydepas.com>',
-    to: process.env.RESEND_TO_EMAIL!,
-    subject: `Nueva consulta — ${data.propiedad}`,
-    html: `
+  try {
+    const resend = new Resend(process.env.RESEND_API_KEY)
+    const { error } = await resend.emails.send({
+      from: 'University Depas <noreply@universitydepas.com>',
+      to: process.env.RESEND_TO_EMAIL!,
+      subject: `Nueva consulta — ${data.propiedad}`,
+      html: `
       <h2>Nueva consulta desde el sitio web</h2>
-      <p><strong>Nombre:</strong> ${data.nombre}</p>
-      <p><strong>Teléfono:</strong> ${data.telefono}</p>
-      <p><strong>Correo:</strong> ${data.correo}</p>
-      <p><strong>Propiedad de interés:</strong> ${data.propiedad}</p>
-      <p><strong>Mensaje:</strong> ${data.mensaje || '(sin mensaje)'}</p>
+      <p><strong>Nombre:</strong> ${escapeHtml(data.nombre)}</p>
+      <p><strong>Teléfono:</strong> ${escapeHtml(data.telefono)}</p>
+      <p><strong>Correo:</strong> ${escapeHtml(data.correo)}</p>
+      <p><strong>Propiedad de interés:</strong> ${escapeHtml(data.propiedad)}</p>
+      <p><strong>Mensaje:</strong> ${data.mensaje ? escapeHtml(data.mensaje) : '(sin mensaje)'}</p>
     `,
-  })
-  return error === null
+    })
+    return error === null
+  } catch {
+    return false
+  }
 }
 
 export async function sendWhatsApp(nombre: string, propiedad: string): Promise<void> {

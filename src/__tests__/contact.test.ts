@@ -56,6 +56,25 @@ describe('sendEmail', () => {
     })
     expect(result).toBe(false)
   })
+
+  it('returns false if Resend throws', async () => {
+    const { Resend } = await import('resend')
+    vi.mocked(Resend).mockImplementationOnce(function () {
+      return {
+        emails: {
+          send: vi.fn().mockRejectedValue(new Error('network error')),
+        },
+      }
+    } as any)
+    const result = await sendEmail({
+      nombre: 'Juan',
+      telefono: '2211234567',
+      correo: 'juan@example.com',
+      propiedad: 'Departamento',
+      mensaje: '',
+    })
+    expect(result).toBe(false)
+  })
 })
 
 describe('sendWhatsApp', () => {
