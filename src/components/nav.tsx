@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Menu } from 'lucide-react'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
 
 const links = [
@@ -40,12 +40,13 @@ export function Nav() {
         {/* Mobile hamburger */}
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild className="md:hidden">
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" aria-label="Abrir menú">
               <Menu className="h-5 w-5" />
             </Button>
           </SheetTrigger>
           <SheetContent side="right" className="w-64">
-            <nav className="flex flex-col gap-4 mt-8">
+            <SheetTitle className="sr-only">Navegación</SheetTitle>
+            <div className="flex flex-col gap-4 mt-8">
               {links.map((l) => (
                 <a
                   key={l.href}
@@ -56,7 +57,7 @@ export function Nav() {
                   {l.label}
                 </a>
               ))}
-            </nav>
+            </div>
           </SheetContent>
         </Sheet>
       </div>
