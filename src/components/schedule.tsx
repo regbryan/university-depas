@@ -9,7 +9,7 @@ export function Schedule() {
     <section id="agendar" className="py-20 bg-slate-50">
       <div className="max-w-4xl mx-auto px-4 text-center">
         <h2 className="text-3xl font-bold text-[#1e3a5f] mb-4">Agenda tu Visita</h2>
-        <p className="text-slate-500 mb-10 max-xl mx-auto">
+        <p className="text-slate-500 mb-10 max-w-xl mx-auto">
           ¿Quieres conocer nuestras propiedades? Agenda una cita con nosotros — es rápido y sencillo.
         </p>
 

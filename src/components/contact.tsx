@@ -83,9 +83,9 @@ export function Contact() {
               />
             </div>
             <div>
-              <Label>Propiedad de interés *</Label>
+              <Label htmlFor="propiedad">Propiedad de interés *</Label>
               <Select onValueChange={setPropiedad} required>
-                <SelectTrigger>
+                <SelectTrigger id="propiedad">
                   <SelectValue placeholder="Selecciona una opción" />
                 </SelectTrigger>
                 <SelectContent>
@@ -132,7 +132,7 @@ export function Contact() {
               <p className="text-green-700 font-semibold text-sm mb-3">📱 WhatsApp</p>
               {/* Placeholder until client provides QR code image */}
               <div
-                className="w-24 h-24 bg-slate-200 rounded mx-auto mb-3 flex items-center justify-items-center text-xs text-slate-400"
+                className="w-24 h-24 bg-slate-200 rounded mx-auto mb-3 flex items-center justify-center text-xs text-slate-400"
                 aria-label="Código QR de WhatsApp (pendiente)"
               >
                 QR
