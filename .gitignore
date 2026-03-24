@@ -44,3 +44,10 @@ next-env.d.ts
 # tools
 .playwright-mcp/
 .superpowers/
+.claude/
+
+# stray screenshots / playwright output
+*.jpeg
+*.png.bak
+full-page-*.jpeg
+full-page-*.png

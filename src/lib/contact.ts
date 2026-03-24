@@ -1,5 +1,3 @@
-import { Resend } from 'resend'
-
 export type ContactFormData = {
   nombre: string
   telefono: string
@@ -8,31 +6,25 @@ export type ContactFormData = {
   mensaje: string
 }
 
-function escapeHtml(str: string): string {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-}
-
 export async function sendEmail(data: ContactFormData): Promise<boolean> {
   try {
-    const resend = new Resend(process.env.RESEND_API_KEY)
-    const { error } = await resend.emails.send({
-      from: 'University Depas <noreply@universitydepas.com>',
-      to: process.env.RESEND_TO_EMAIL!,
-      subject: `Nueva consulta — ${data.propiedad}`,
-      html: `
-      <h2>Nueva consulta desde el sitio web</h2>
-      <p><strong>Nombre:</strong> ${escapeHtml(data.nombre)}</p>
-      <p><strong>Teléfono:</strong> ${escapeHtml(data.telefono)}</p>
-      <p><strong>Correo:</strong> ${escapeHtml(data.correo)}</p>
-      <p><strong>Propiedad de interés:</strong> ${escapeHtml(data.propiedad)}</p>
-      <p><strong>Mensaje:</strong> ${data.mensaje ? escapeHtml(data.mensaje) : '(sin mensaje)'}</p>
-    `,
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        access_key: process.env.WEB3FORMS_KEY,
+        subject: `Nueva consulta — ${data.propiedad}`,
+        from_name: data.nombre,
+        replyto: data.correo,
+        name: data.nombre,
+        phone: data.telefono,
+        email: data.correo,
+        property: data.propiedad,
+        message: data.mensaje || '(sin mensaje)',
+      }),
     })
-    return error === null
+    const json = await res.json()
+    return json.success === true
   } catch {
     return false
   }
@@ -41,6 +33,7 @@ export async function sendEmail(data: ContactFormData): Promise<boolean> {
 export async function sendWhatsApp(nombre: string, propiedad: string): Promise<void> {
   const phone = process.env.CALLMEBOT_PHONE
   const apiKey = process.env.CALLMEBOT_API_KEY
+  if (!phone || !apiKey) return
   const message = encodeURIComponent(
     `Nueva consulta en University Depas!\nNombre: ${nombre}\nPropiedad: ${propiedad}`
   )
@@ -49,6 +42,6 @@ export async function sendWhatsApp(nombre: string, propiedad: string): Promise<v
       `https://api.callmebot.com/whatsapp.php?phone=${phone}&text=${message}&apikey=${apiKey}`
     )
   } catch {
-    // WhatsApp notification is best-effort — never throw
+    // best-effort, never throw
   }
 }

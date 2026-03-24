@@ -28,7 +28,9 @@ export function PropertyCarousel() {
                   key={p.id}
                   className="flex-[0_0_100%] min-w-0 md:flex-[0_0_50%] lg:flex-[0_0_33.33%] px-3"
                 >
-                  <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200 h-full flex flex-col">
+                  <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 h-full flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+
+                    {/* Image + overlaid badges */}
                     <div className="relative h-52 bg-slate-200">
                       <Image
                         src={p.image}
@@ -36,20 +38,33 @@ export function PropertyCarousel() {
                         fill
                         className="object-cover"
                       />
-                      <span className="absolute top-3 left-3 bg-[#1e3a5f] text-white text-xs font-semibold px-2 py-1 rounded">
+                      {/* Frosted listing-type badge — top left */}
+                      <span
+                        className={`absolute top-3 left-3 text-xs font-bold px-2.5 py-1 rounded-full backdrop-blur-md border ${
+                          p.listingType === 'Venta'
+                            ? 'bg-white/20 border-white/30 text-white'
+                            : 'bg-green-600/80 border-green-400/30 text-white'
+                        }`}
+                      >
+                        {p.listingType}
+                      </span>
+                      {/* Tower badge — top right */}
+                      <span className="absolute top-3 right-3 bg-[#1e3a5f]/80 backdrop-blur-sm text-white text-xs font-semibold px-2.5 py-1 rounded-full border border-white/10">
                         Torre {p.tower}
                       </span>
                     </div>
+
+                    {/* Card body */}
                     <div className="p-5 flex flex-col flex-1">
-                      <h3 className="font-bold text-[#1e3a5f] text-lg mb-1">{p.type}</h3>
-                      <div className="flex gap-4 text-slate-500 text-sm mb-3">
-                        <span className="flex items-center gap-1">
-                          <Bed className="h-4 w-4" /> {p.beds} rec.
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Bath className="h-4 w-4" /> {p.baths} baño{p.baths > 1 ? 's' : ''}
-                        </span>
-                      </div>
+                      {/* Price — prominent */}
+                      <p className="text-[#2563eb] font-bold text-xl mb-1 tracking-tight">
+                        {p.price ?? 'Consultar precio'}
+                      </p>
+
+                      {/* Property name */}
+                      <h3 className="font-semibold text-[#1e3a5f] text-base mb-3">{p.type}</h3>
+
+                      {/* Features */}
                       <ul className="text-slate-600 text-sm space-y-1 mb-4 flex-1">
                         {p.features.map((f) => (
                           <li key={f} className="flex items-center gap-2">
@@ -57,22 +72,32 @@ export function PropertyCarousel() {
                           </li>
                         ))}
                       </ul>
-                      <div className="flex items-center justify-between mt-auto">
-                        <span className="font-bold text-[#2563eb]">
-                          {p.price ?? 'Consultar precio'}
-                        </span>
-                        <Button asChild size="sm" variant="outline">
-                          <a href="#contacto">Más información</a>
-                        </Button>
+
+                      {/* Divider */}
+                      <div className="border-t border-slate-100 pt-3 mt-auto">
+                        <div className="flex items-center justify-between">
+                          <div className="flex gap-4 text-slate-500 text-sm">
+                            <span className="flex items-center gap-1">
+                              <Bed className="h-4 w-4" /> {p.beds} rec.
+                            </span>
+                            <span className="flex items-center gap-1">
+                              <Bath className="h-4 w-4" /> {p.baths} baño{p.baths > 1 ? 's' : ''}
+                            </span>
+                          </div>
+                          <Button asChild size="sm" variant="outline" className="text-xs">
+                            <a href="#contacto">Info</a>
+                          </Button>
+                        </div>
                       </div>
                     </div>
+
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Arrows — hidden on touch (swipe replaces them) */}
+          {/* Arrows */}
           <button
             onClick={() => emblaApi?.scrollPrev()}
             aria-label="Anterior"

@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 function FacebookIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -14,44 +16,54 @@ function InstagramIcon({ className }: { className?: string }) {
   )
 }
 
+function TikTokIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.15 8.15 0 004.77 1.52V6.76a4.85 4.85 0 01-1-.07z" />
+    </svg>
+  )
+}
+
 export function Footer() {
   return (
-    <footer className="bg-[#1e3a5f] text-white py-10">
-      <div className="max-w-6xl mx-auto px-4 text-center">
-        <p className="font-bold text-xl tracking-wide mb-1">UNIVERSITY DEPAS</p>
-        <p className="text-blue-300 text-sm mb-6">Tu hogar, nuestra misión.</p>
-        <div className="flex justify-center gap-5 mb-6">
-          <a
-            href="https://facebook.com/UniversityDepasOficial"
-            target="_blank"
-            rel="noreferrer"
+    <footer className="bg-[#0f2240] text-white py-12">
+      <div className="max-w-6xl mx-auto px-4 flex flex-col items-center text-center gap-6">
+
+        {/* Logo */}
+        <Image
+          src="/images/UniversityDepasLogo.png"
+          alt="University Depas"
+          width={160}
+          height={52}
+          className="h-12 w-auto object-contain opacity-90"
+        />
+
+        <p className="text-blue-300 text-sm">Tu hogar, nuestra misión.</p>
+
+        {/* Social icons */}
+        <div className="flex justify-center gap-5">
+          <a href="https://facebook.com/UniversityDepasOficial" target="_blank" rel="noreferrer"
             aria-label="Facebook de University Depas"
-            className="text-blue-200 hover:text-white transition-colors"
-          >
+            className="text-blue-200 hover:text-white transition-colors">
             <FacebookIcon className="h-5 w-5" />
           </a>
-          <a
-            href="https://instagram.com/university_depass"
-            target="_blank"
-            rel="noreferrer"
+          <a href="https://instagram.com/university_depass" target="_blank" rel="noreferrer"
             aria-label="Instagram de University Depas"
-            className="text-blue-200 hover:text-white transition-colors"
-          >
+            className="text-blue-200 hover:text-white transition-colors">
             <InstagramIcon className="h-5 w-5" />
           </a>
-          <a
-            href="https://tiktok.com/@universitydepas"
-            target="_blank"
-            rel="noreferrer"
+          <a href="https://tiktok.com/@universitydepas" target="_blank" rel="noreferrer"
             aria-label="TikTok de University Depas"
-            className="text-blue-200 hover:text-white transition-colors text-xs font-bold flex items-center"
-          >
-            TK
+            className="text-blue-200 hover:text-white transition-colors">
+            <TikTokIcon className="h-5 w-5" />
           </a>
         </div>
-        <p className="text-blue-400 text-xs">
-          © {new Date().getFullYear()} University Depas. Todos los derechos reservados.
-        </p>
+
+        <div className="border-t border-white/10 w-full pt-6">
+          <p className="text-blue-400 text-xs">
+            © {new Date().getFullYear()} University Depas. Todos los derechos reservados.
+          </p>
+        </div>
       </div>
     </footer>
   )

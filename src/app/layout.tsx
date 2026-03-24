@@ -6,6 +6,12 @@ export const metadata: Metadata = {
   title: 'University Depas — Departamentos y Lofts',
   description:
     'Departamentos y lofts en venta y renta cerca de la universidad. Torres Aurum, Perseo y Maya.',
+  openGraph: {
+    title: 'University Depas — Departamentos y Lofts en Puebla',
+    description: 'Departamentos y lofts en venta y renta cerca de la universidad. Torres Aurum, Perseo y Maya en Puebla, México.',
+    locale: 'es_MX',
+    type: 'website',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
