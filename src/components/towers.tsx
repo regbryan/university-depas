@@ -27,7 +27,7 @@ export function Towers() {
           {towers.map((t) => (
             <div
               key={t.name}
-              className="bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200"
+              className="bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
             >
               <div className="relative h-48 bg-slate-200">
                 <Image
