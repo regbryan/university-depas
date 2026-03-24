@@ -10,7 +10,7 @@ import { Footer } from '@/components/footer'
 
 export default function Home() {
   return (
-    <main>
+    <main aria-label="University Depas">
       <Nav />
       <Hero />
       <PropertyCarousel />
