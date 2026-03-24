@@ -40,15 +40,13 @@ export function Amenities() {
           <h2 className="text-3xl sm:text-4xl font-bold text-[#1e3a5f]">Amenidades</h2>
         </div>
 
-        {/* Gym photo grid */}
+        {/* Gym photo grid — 6 equal cards */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-14">
-          {gymPhotos.map((photo, i) => (
+          {gymPhotos.map((photo) => (
             <div
               key={photo.src}
-              className={`relative overflow-hidden rounded-xl bg-slate-200 ${
-                i === 0 ? 'col-span-2 md:col-span-1 row-span-2' : ''
-              }`}
-              style={{ aspectRatio: i === 0 ? '4/5' : '4/3' }}
+              className="relative overflow-hidden rounded-xl bg-slate-200"
+              style={{ aspectRatio: '4/3' }}
             >
               <Image
                 src={photo.src}
