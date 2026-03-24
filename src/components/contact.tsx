@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { Phone, MapPin } from 'lucide-react'
-import { FaFacebook, FaInstagram } from 'react-icons/fa'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -16,13 +15,6 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-function TikTokIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.15 8.15 0 004.77 1.52V6.76a4.85 4.85 0 01-1-.07z" />
-    </svg>
-  )
-}
 
 export function Contact() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
@@ -197,21 +189,6 @@ export function Contact() {
               </a>
             </div>
 
-            {/* Social links */}
-            <div className="flex items-center gap-4 px-1">
-              <a href="https://facebook.com/UniversityDepasOficial" target="_blank" rel="noreferrer"
-                aria-label="Facebook" className="text-slate-400 hover:text-[#2563eb] transition-colors">
-                <FaFacebook className="h-5 w-5" />
-              </a>
-              <a href="https://instagram.com/university_depass" target="_blank" rel="noreferrer"
-                aria-label="Instagram" className="text-slate-400 hover:text-pink-500 transition-colors">
-                <FaInstagram className="h-5 w-5" />
-              </a>
-              <a href="https://tiktok.com/@universitydepas" target="_blank" rel="noreferrer"
-                aria-label="TikTok" className="text-slate-400 hover:text-black transition-colors">
-                <TikTokIcon className="h-5 w-5" />
-              </a>
-            </div>
 
           </div>
         </div>
