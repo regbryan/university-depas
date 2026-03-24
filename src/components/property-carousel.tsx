@@ -1,14 +1,24 @@
 'use client'
 
+import { useState } from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
 import { ChevronLeft, ChevronRight, Bed, Bath } from 'lucide-react'
 import Image from 'next/image'
 import { properties } from '@/data/properties'
+import type { Property } from '@/data/properties'
 import { Button } from '@/components/ui/button'
+import { PropertySheet } from '@/components/property-sheet'
 
 export function PropertyCarousel() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 4000 })])
+  const [selected, setSelected] = useState<Property | null>(null)
+  const [sheetOpen, setSheetOpen] = useState(false)
+
+  function openSheet(property: Property) {
+    setSelected(property)
+    setSheetOpen(true)
+  }
 
   return (
     <section id="propiedades" className="py-20 bg-slate-50">
@@ -28,10 +38,13 @@ export function PropertyCarousel() {
                   key={p.id}
                   className="flex-[0_0_100%] min-w-0 md:flex-[0_0_50%] lg:flex-[0_0_33.33%] px-3"
                 >
-                  <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 h-full flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-
+                  {/* Entire card is clickable */}
+                  <button
+                    onClick={() => openSheet(p)}
+                    className="w-full text-left bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 h-full flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563eb]"
+                  >
                     {/* Image + overlaid badges */}
-                    <div className="relative h-52 bg-slate-200">
+                    <div className="relative h-52 bg-slate-200 w-full">
                       <Image
                         src={p.image}
                         alt={`Torre ${p.tower} — ${p.type}`}
@@ -52,6 +65,13 @@ export function PropertyCarousel() {
                       <span className="absolute top-3 right-3 bg-[#1e3a5f]/80 backdrop-blur-sm text-white text-xs font-semibold px-2.5 py-1 rounded-full border border-white/10">
                         Torre {p.tower}
                       </span>
+
+                      {/* "Ver más" hover overlay */}
+                      <div className="absolute inset-0 bg-[#1e3a5f]/0 hover:bg-[#1e3a5f]/30 transition-colors duration-200 flex items-center justify-center">
+                        <span className="opacity-0 group-hover:opacity-100 bg-white text-[#1e3a5f] text-xs font-semibold px-3 py-1.5 rounded-full shadow">
+                          Ver detalles
+                        </span>
+                      </div>
                     </div>
 
                     {/* Card body */}
@@ -66,11 +86,14 @@ export function PropertyCarousel() {
 
                       {/* Features */}
                       <ul className="text-slate-600 text-sm space-y-1 mb-4 flex-1">
-                        {p.features.map((f) => (
+                        {p.features.slice(0, 3).map((f) => (
                           <li key={f} className="flex items-center gap-2">
                             <span className="text-[#2563eb]">✓</span> {f}
                           </li>
                         ))}
+                        {p.features.length > 3 && (
+                          <li className="text-slate-400 text-xs">+{p.features.length - 3} más...</li>
+                        )}
                       </ul>
 
                       {/* Divider */}
@@ -84,14 +107,13 @@ export function PropertyCarousel() {
                               <Bath className="h-4 w-4" /> {p.baths} baño{p.baths > 1 ? 's' : ''}
                             </span>
                           </div>
-                          <Button asChild size="sm" variant="outline" className="text-xs">
-                            <a href="#contacto">Info</a>
-                          </Button>
+                          <span className="text-xs font-medium text-[#2563eb] underline underline-offset-2">
+                            Ver detalles →
+                          </span>
                         </div>
                       </div>
                     </div>
-
-                  </div>
+                  </button>
                 </div>
               ))}
             </div>
@@ -114,6 +136,13 @@ export function PropertyCarousel() {
           </button>
         </div>
       </div>
+
+      {/* Property detail sheet */}
+      <PropertySheet
+        property={selected}
+        open={sheetOpen}
+        onClose={() => setSheetOpen(false)}
+      />
     </section>
   )
 }
